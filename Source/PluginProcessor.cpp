@@ -134,6 +134,8 @@ void GainTutorialAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiB
     ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+    
+//    rawVolume = 0.015;
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
@@ -154,7 +156,10 @@ void GainTutorialAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiB
     {
         auto* channelData = buffer.getWritePointer (channel);
 
-        // ..do something to the data...
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+            channelData[sample] = buffer.getSample(channel, sample) * rawVolume;
+        }
     }
 }
 
