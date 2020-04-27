@@ -22,8 +22,8 @@ GainTutorialAudioProcessorEditor::GainTutorialAudioProcessorEditor (GainTutorial
     gainSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
     gainSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 100, 25);
     
-    gainSlider.setRange(0.0, 1.0);
-    gainSlider.setValue(0.5);
+    gainSlider.setRange(-48.0, 0.0);
+    gainSlider.setValue(-1.0);
     
     gainSlider.addListener(this);
     
@@ -56,6 +56,6 @@ void GainTutorialAudioProcessorEditor::sliderValueChanged (Slider *slider)
 {
     if (slider == &gainSlider)
     {
-        processor.rawVolume = gainSlider.getValue();
+        processor.rawVolume = pow (10, gainSlider.getValue() / 20);
     }
 }
